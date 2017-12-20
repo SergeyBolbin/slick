@@ -40,13 +40,20 @@ object Main {
 
   private val selectAction = PersonTableQuery.result
 
-  def execute[T](action: DBIO[T]): T = Await.result(db.run(action), Duration.Inf)
+  private val query1 =
+    PersonTableQuery.filter(_.profession === Profession.Instrumentalist)
+      .sortBy(_.year.desc)
+      .map(_.name)
+      .result
 
+
+  def execute[T](action: DBIO[T]): T = Await.result(db.run(action), Duration.Inf)
 
   def main(args: Array[String]): Unit = {
     execute(createTableAction)
     execute(insertAction)
     execute(selectAction).foreach(println)
-  }
+    execute(query1).foreach(println)
+
 
 }
