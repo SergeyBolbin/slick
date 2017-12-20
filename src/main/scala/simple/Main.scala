@@ -54,6 +54,5 @@ object Main {
     execute(insertAction)
     execute(selectAction).foreach(println)
     execute(query1).foreach(println)
-
-
+  }
 }
